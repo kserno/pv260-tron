@@ -16,8 +16,6 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 	private List<Player> players = new ArrayList<>();
 
-
-
 	public void init() {
 		super.init();
 
@@ -46,9 +44,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 				position,
 				Player.Direction.RIGHT,
 				Color.green,
-				movement,
-				sm.getWidth(),
-				sm.getHeight()
+				movement
 		);
 	}
 
@@ -65,9 +61,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 				position,
 				Player.Direction.LEFT,
 				Color.red,
-				movement,
-				sm.getWidth(),
-				sm.getHeight()
+				movement
 		);
 	}
 

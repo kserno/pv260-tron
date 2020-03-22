@@ -19,17 +19,13 @@ public class Player {
 
     private boolean alive = true;
 
-    private int width, height;
-
     private List<Point> path = new ArrayList<>();
 
-    public Player(Point position, Direction currentDirection, Color color, Map<Integer, Direction> moveAction, int width, int height) {
+    public Player(Point position, Direction currentDirection, Color color, Map<Integer, Direction> moveAction) {
         this.position = position;
         this.currentDirection = currentDirection;
         this.color = color;
         this.moveAction = moveAction;
-        this.width = width;
-        this.height = height;
     }
 
     public void keyPressed(KeyEvent event) {
