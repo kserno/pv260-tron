@@ -98,7 +98,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 				});
 			}
 		});
-		if (players.stream().noneMatch(Player::isAlive)) {
+		if (players.stream().filter(Player::isAlive).count() == 1) {
 			System.exit(0);
 		}
 	}
