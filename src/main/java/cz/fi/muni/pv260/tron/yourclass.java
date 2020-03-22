@@ -26,9 +26,11 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 		Player player1 = initPlayer1();
 		Player player2 = initPlayer2();
+		Player player3 = initPlayer3();
 
 		players.add(player1);
 		players.add(player2);
+		players.add(player3);
 	}
 
 	private Player initPlayer1() {
@@ -61,6 +63,23 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 				position,
 				Player.Direction.LEFT,
 				Color.red,
+				movement
+		);
+	}
+
+	private Player initPlayer3() {
+		Point position = new Point(300, 300);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_I, Player.Direction.UP);
+		movement.put(KeyEvent.VK_K, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_J, Player.Direction.LEFT);
+		movement.put(KeyEvent.VK_L, Player.Direction.RIGHT);
+
+		return new Player(
+				position,
+				Player.Direction.DOWN,
+				Color.blue,
 				movement
 		);
 	}
