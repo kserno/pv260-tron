@@ -154,6 +154,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		}
 	}
 
+
 	public void keyReleased(KeyEvent e) {
 
 	}
