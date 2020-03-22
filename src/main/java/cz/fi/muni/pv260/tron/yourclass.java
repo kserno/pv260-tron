@@ -30,7 +30,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 		players.add(player1);
 		players.add(player2);
-		players.add(player3);
+//		players.add(player3);
 	}
 
 	private Player initPlayer1() {
