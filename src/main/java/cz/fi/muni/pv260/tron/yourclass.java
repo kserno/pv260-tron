@@ -156,8 +156,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		pathy1.add(centrey1);
 		pathx2.add(centrex2);
 		pathy2.add(centrey2);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
+		clearGraphics(g);
 		for (int x = 0;x<pathx1.size();x++){
 		g.setColor(Color.green);
 		g.fillRect(pathx1.get(x), pathy1.get(x), 10, 10);
@@ -203,6 +202,10 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		}
 	}
 
+	private void clearGraphics(Graphics2D g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
+	}
 
 	public void keyReleased(KeyEvent e) {
 
