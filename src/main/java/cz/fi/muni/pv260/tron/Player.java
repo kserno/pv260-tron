@@ -41,7 +41,9 @@ public class Player {
         }
     }
 
-    public void move() {
+    public void move(int width, int height) {
+        if (!isAlive()) return;
+
         path.add((Point) position.clone());
         currentDirection.move(position, width, height);
     }
@@ -60,6 +62,10 @@ public class Player {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public void collide() {
+        alive = false;
     }
 
 
