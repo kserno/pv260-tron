@@ -1,17 +1,21 @@
 package cz.fi.muni.pv260.tron;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class yourclass extends Core implements KeyListener, MouseListener,
 		MouseMotionListener {
+
+	private List<Player> players = new ArrayList<>();
+
 	int centrex1 = 40;
 	int centrey1 = 40;
 	int centrex2 = 600;
@@ -31,7 +35,52 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		w.addKeyListener(this);
 		w.addMouseListener(this);
 		w.addMouseMotionListener(this);
+
+		Player player1 = initPlayer1();
+		Player player2 = initPlayer2();
+
+		players.add(player1);
+		players.add(player2);
 	}
+
+	private Player initPlayer1() {
+		Point position = new Point(40, 40);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_UP, Player.Direction.UP);
+		movement.put(KeyEvent.VK_DOWN, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_RIGHT, Player.Direction.RIGHT);
+		movement.put(KeyEvent.VK_LEFT, Player.Direction.LEFT);
+
+		return new Player(
+				position,
+				Player.Direction.RIGHT,
+				Color.green,
+				movement,
+				sm.getWidth(),
+				sm.getHeight()
+		);
+	}
+
+	private Player initPlayer2() {
+		Point position = new Point(600, 440);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_W, Player.Direction.UP);
+		movement.put(KeyEvent.VK_S, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_A, Player.Direction.RIGHT);
+		movement.put(KeyEvent.VK_D, Player.Direction.LEFT);
+
+		return new Player(
+				position,
+				Player.Direction.LEFT,
+				Color.red,
+				movement,
+				sm.getWidth(),
+				sm.getHeight()
+		);
+	}
+
 
 	public static void main(String[] args) {
 		new yourclass().run();
