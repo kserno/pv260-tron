@@ -17,6 +17,8 @@ public class Player {
 
     private Map<Integer, Direction> moveAction;
 
+    private boolean alive = true;
+
     private int width, height;
 
     private List<Point> path = new ArrayList<>();
@@ -55,6 +57,11 @@ public class Player {
     public List<Point> getPath() {
         return path;
     }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
 
     enum Direction {
         LEFT {
