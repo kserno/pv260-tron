@@ -42,6 +42,10 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 	public void draw(Graphics2D g) {
 		getDirection();
 		checkCollision();
+		drawOnScreen(g);
+	}
+
+	private void drawOnScreen(Graphics2D g) {
 		pathx1.add(centrex1);
 		pathy1.add(centrey1);
 		pathx2.add(centrex2);
