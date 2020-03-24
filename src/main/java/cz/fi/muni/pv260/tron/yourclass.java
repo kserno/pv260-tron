@@ -1,28 +1,20 @@
 package cz.fi.muni.pv260.tron;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class yourclass extends Core implements KeyListener, MouseListener,
 		MouseMotionListener {
-	int centrex1 = 40;
-	int centrey1 = 40;
-	int centrex2 = 600;
-	int centrey2 = 440;
-	int currentDirection1 = 1;
-	int currentDirection2 = 3;
-	int moveAmount = 5;
-	ArrayList<Integer> pathx1 = new ArrayList();
-	ArrayList<Integer> pathy1 = new ArrayList();
-	ArrayList<Integer> pathx2 = new ArrayList();
-	ArrayList<Integer> pathy2 = new ArrayList();
+
+	private List<Player> players = new ArrayList<>();
 
 	public void init() {
 		super.init();
@@ -31,129 +23,111 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		w.addKeyListener(this);
 		w.addMouseListener(this);
 		w.addMouseMotionListener(this);
+
+		Player player1 = initPlayer1();
+		Player player2 = initPlayer2();
+		Player player3 = initPlayer3();
+
+		players.add(player1);
+		players.add(player2);
+//		players.add(player3);
 	}
+
+	private Player initPlayer1() {
+		Point position = new Point(40, 40);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_UP, Player.Direction.UP);
+		movement.put(KeyEvent.VK_DOWN, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_RIGHT, Player.Direction.RIGHT);
+		movement.put(KeyEvent.VK_LEFT, Player.Direction.LEFT);
+
+		return new Player(
+				position,
+				Player.Direction.RIGHT,
+				Color.green,
+				movement
+		);
+	}
+
+	private Player initPlayer2() {
+		Point position = new Point(600, 440);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_W, Player.Direction.UP);
+		movement.put(KeyEvent.VK_S, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_A, Player.Direction.LEFT);
+		movement.put(KeyEvent.VK_D, Player.Direction.RIGHT);
+
+		return new Player(
+				position,
+				Player.Direction.LEFT,
+				Color.red,
+				movement
+		);
+	}
+
+	private Player initPlayer3() {
+		Point position = new Point(300, 300);
+		Map<Integer, Player.Direction> movement = new HashMap<>();
+
+		movement.put(KeyEvent.VK_I, Player.Direction.UP);
+		movement.put(KeyEvent.VK_K, Player.Direction.DOWN);
+		movement.put(KeyEvent.VK_J, Player.Direction.LEFT);
+		movement.put(KeyEvent.VK_L, Player.Direction.RIGHT);
+
+		return new Player(
+				position,
+				Player.Direction.DOWN,
+				Color.blue,
+				movement
+		);
+	}
+
 
 	public static void main(String[] args) {
 		new yourclass().run();
 	}
 
 	public void draw(Graphics2D g) {
-		switch(currentDirection1){
-		case 0:
-			if (centrey1>0){
-			centrey1-=moveAmount;
-			} else {
-				centrey1 = sm.getHeight();
-			}
-			break;
-		case 1:
-			if (centrex1 < sm.getWidth()){
-			centrex1+=moveAmount;
-			} else {
-				centrex1 = 0;
-			}
-			break;
-		case 2:
-			if (centrey1 < sm.getHeight()){
-			centrey1+=moveAmount;
-			} else {
-				centrey1 = 0;
-			}
-			break;
-		case 3:
-			if (centrex1>0){
-			centrex1-=moveAmount;
-			} else {
-				centrex1 = sm.getWidth();
-			}
-			break;
-		}
-		switch(currentDirection2){
-		case 0:
-			if (centrey2>0){
-			centrey2-=moveAmount;
-			} else {
-				centrey2 = sm.getHeight();
-			}
-			break;
-		case 1:
-			if (centrex2 < sm.getWidth()){
-			centrex2+=moveAmount;
-			} else {
-				centrex2 = 0;
-			}
-			break;
-		case 2:
-			if (centrey2 < sm.getHeight()){
-			centrey2+=moveAmount;
-			} else {
-				centrey2 = 0;
-			}
-			break;
-		case 3:
-			if (centrex2>0){
-			centrex2-=moveAmount;
-			} else {
-				centrex2 = sm.getWidth();
-			}
-			break;
-		}
-	    for (int x = 0;x<pathx1.size();x++){
-	    	if (((centrex1 == pathx1.get(x)) && (centrey1 == pathy1.get(x))) || ((centrex2 == pathx2.get(x)) && (centrey2 == pathy2.get(x))) || ((centrex1 == pathx2.get(x)) && (centrey1 == pathy2.get(x))) || ((centrex2 == pathx1.get(x)) && (centrey2 == pathy1.get(x)))){
-	    		System.exit(0);
-	    	}
-	    }
-		pathx1.add(centrex1);
-		pathy1.add(centrey1);
-		pathx2.add(centrex2);
-		pathy2.add(centrey2);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
-		for (int x = 0;x<pathx1.size();x++){
-		g.setColor(Color.green);
-		g.fillRect(pathx1.get(x), pathy1.get(x), 10, 10);
-		g.setColor(Color.red);
-		g.fillRect(pathx2.get(x), pathy2.get(x), 10, 10);
-		}
+		players.forEach(player -> player.move(sm.getWidth(), sm.getHeight()));
+	    detectCollisions();
+		clearGraphics(g);
+		players.forEach(player -> drawPath(g, player));
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if (currentDirection1 != 2){
-			currentDirection1 = 0;
+		players.forEach(player -> player.keyPressed(e));
+	}
+
+	private void clearGraphics(Graphics2D g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
+	}
+
+	private void detectCollisions() {
+		players.forEach(player1 -> {
+			if (player1.isAlive()) {
+				players.forEach(player2 -> {
+					player2.getPath().forEach(pathPosition -> {
+						if (player1.getPosition().equals(pathPosition)) {
+							player1.collide();
+						}
+					});
+				});
 			}
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (currentDirection1 != 0){
-				currentDirection1 = 2;
-				}
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (currentDirection1 != 3){
-				currentDirection1 = 1;
-				}
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (currentDirection1 != 1){
-				currentDirection1 = 3;
-				}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_W){
-			if (currentDirection2 != 2){
-			currentDirection2 = 0;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			if (currentDirection2 != 0){
-				currentDirection2 = 2;
-				}
-		} else if (e.getKeyCode() == KeyEvent.VK_D) {
-			if (currentDirection2 != 3){
-				currentDirection2 = 1;
-				}
-		} else if (e.getKeyCode() == KeyEvent.VK_A) {
-			if (currentDirection2 != 1){
-				currentDirection2 = 3;
-				}
+		});
+		if (players.stream().filter(Player::isAlive).count() <= 1) {
+			System.exit(0);
 		}
 	}
 
+	private void drawPath(Graphics2D g, Player player) {
+		player.getPath().forEach(point -> {
+			g.setColor(player.getColor());
+			g.fillRect(point.x, point.y, 10, 10);
+		});
+	}
 
 	public void keyReleased(KeyEvent e) {
 

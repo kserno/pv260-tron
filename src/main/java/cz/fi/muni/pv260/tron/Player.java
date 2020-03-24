@@ -17,17 +17,15 @@ public class Player {
 
     private Map<Integer, Direction> moveAction;
 
-    private int width, height;
+    private boolean alive = true;
 
     private List<Point> path = new ArrayList<>();
 
-    public Player(Point position, Direction currentDirection, Color color, Map<Integer, Direction> moveAction, int width, int height) {
+    public Player(Point position, Direction currentDirection, Color color, Map<Integer, Direction> moveAction) {
         this.position = position;
         this.currentDirection = currentDirection;
         this.color = color;
         this.moveAction = moveAction;
-        this.width = width;
-        this.height = height;
     }
 
     public void keyPressed(KeyEvent event) {
@@ -39,7 +37,9 @@ public class Player {
         }
     }
 
-    public void move() {
+    public void move(int width, int height) {
+        if (!isAlive()) return;
+
         path.add((Point) position.clone());
         currentDirection.move(position, width, height);
     }
@@ -55,6 +55,15 @@ public class Player {
     public List<Point> getPath() {
         return path;
     }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void collide() {
+        alive = false;
+    }
+
 
     enum Direction {
         LEFT {
