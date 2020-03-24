@@ -1,6 +1,5 @@
 package main.java.cz.fi.muni.pv260.tron;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
@@ -42,22 +41,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 	public void draw(Graphics2D g) {
 		getDirection();
 		checkCollision();
-		drawOnScreen(g);
-	}
-
-	private void drawOnScreen(Graphics2D g) {
-		pathx1.add(centrex1);
-		pathy1.add(centrey1);
-		pathx2.add(centrex2);
-		pathy2.add(centrey2);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
-		for (int x = 0;x<pathx1.size();x++){
-			g.setColor(Color.green);
-			g.fillRect(pathx1.get(x), pathy1.get(x), 10, 10);
-			g.setColor(Color.red);
-			g.fillRect(pathx2.get(x), pathy2.get(x), 10, 10);
-		}
+		presentation.drawOnScreen(centrex1, centrex2, centrey1, centrey2, pathx1, pathx2, pathy1, pathy2, sm, g);
 	}
 
 	private void checkCollision() {
