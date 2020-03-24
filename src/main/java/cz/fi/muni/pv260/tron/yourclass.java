@@ -1,4 +1,4 @@
-package main.java.cz.fi.muni.pv260.tron;
+package cz.fi.muni.pv260.tron;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,7 +6,6 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
@@ -119,7 +118,40 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 	}
 
 	public void keyPressed(KeyEvent e) {
-
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			if (currentDirection1 != 2){
+			currentDirection1 = 0;
+			}
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			if (currentDirection1 != 0){
+				currentDirection1 = 2;
+				}
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if (currentDirection1 != 3){
+				currentDirection1 = 1;
+				}
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			if (currentDirection1 != 1){
+				currentDirection1 = 3;
+				}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_W){
+			if (currentDirection2 != 2){
+			currentDirection2 = 0;
+			}
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			if (currentDirection2 != 0){
+				currentDirection2 = 2;
+				}
+		} else if (e.getKeyCode() == KeyEvent.VK_D) {
+			if (currentDirection2 != 3){
+				currentDirection2 = 1;
+				}
+		} else if (e.getKeyCode() == KeyEvent.VK_A) {
+			if (currentDirection2 != 1){
+				currentDirection2 = 3;
+				}
+		}
 	}
 
 
@@ -142,23 +174,6 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 	}
 
 	public void mousePressed(MouseEvent e) {
-
-		if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
-			if (currentDirection1 == 0){ currentDirection1 = 3;	}
-			else if (currentDirection1 == 1){ currentDirection1 = 0;	}
-			else if (currentDirection1 == 2){ currentDirection1 = 1;	}
-			else if (currentDirection1 == 3){ currentDirection1 = 2;	}
-		}
-
-		else if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK)
-		{
-			if (currentDirection1 == 0){ currentDirection1 = 1;	}
-			else if (currentDirection1 == 3){ currentDirection1 = 0;	}
-			else if (currentDirection1 == 2){ currentDirection1 = 3;	}
-			else if (currentDirection1 == 1){ currentDirection1 = 2;	}
-		}
-
-
 	}
 
 	public void mouseReleased(MouseEvent e) {

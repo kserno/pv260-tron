@@ -1,4 +1,4 @@
-package main.java.cz.fi.muni.pv260.tron;
+package cz.fi.muni.pv260.tron;
 
 import java.awt.Image;
 import java.util.ArrayList;
