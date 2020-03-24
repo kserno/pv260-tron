@@ -1,6 +1,5 @@
 package main.java.cz.fi.muni.pv260.tron;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Window;
@@ -42,11 +41,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 	public void draw(Graphics2D g) {
 		getDirection();
-		for (int x = 0;x<pathx1.size();x++){
-			if (((centrex1 == pathx1.get(x)) && (centrey1 == pathy1.get(x))) || ((centrex2 == pathx2.get(x)) && (centrey2 == pathy2.get(x))) || ((centrex1 == pathx2.get(x)) && (centrey1 == pathy2.get(x))) || ((centrex2 == pathx1.get(x)) && (centrey2 == pathy1.get(x)))){
-				System.exit(0);
-			}
-		}
+		checkCollision();
 		pathx1.add(centrex1);
 		pathy1.add(centrey1);
 		pathx2.add(centrex2);
@@ -58,6 +53,14 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 			g.fillRect(pathx1.get(x), pathy1.get(x), 10, 10);
 			g.setColor(Color.red);
 			g.fillRect(pathx2.get(x), pathy2.get(x), 10, 10);
+		}
+	}
+
+	private void checkCollision() {
+		for (int x = 0;x<pathx1.size();x++){
+			if (((centrex1 == pathx1.get(x)) && (centrey1 == pathy1.get(x))) || ((centrex2 == pathx2.get(x)) && (centrey2 == pathy2.get(x))) || ((centrex1 == pathx2.get(x)) && (centrey1 == pathy2.get(x))) || ((centrex2 == pathx1.get(x)) && (centrey2 == pathy1.get(x)))){
+				System.exit(0);
+			}
 		}
 	}
 
