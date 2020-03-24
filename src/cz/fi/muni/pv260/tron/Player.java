@@ -16,32 +16,79 @@ public class Player {
     private Point position;
     private  Direction currentDirection;
 
+    private static Direction mouseDirection=Direction.RIGHT;
+    public boolean mouseFlag =false;
     private Color color;
 
-    private MoveAction moveAction;
+    private Map<Integer, Direction> moveAction;
 
     private boolean alive = true;
 
     private List<Point> path = new ArrayList<>();
 
-    public Player(Point position, Direction currentDirection, Color color, MoveAction moveAction) {
+    public Player(Point position, Direction currentDirection, Color color, Map<Integer, Direction> moveAction) {
         this.position = position;
         this.currentDirection = currentDirection;
         this.color = color;
         this.moveAction = moveAction;
     }
 
-    public void changeDirection(int event) {
-        currentDirection = moveAction.move(event, currentDirection);
+
+
+    public void keyPressed(KeyEvent event) {
+        if (moveAction.containsKey(event.getKeyCode())) {
+            Direction direction = moveAction.get(event.getKeyCode());
+            if (currentDirection != direction.getOpposite()) {
+                currentDirection = direction;
+
+
+
+            }
+        }
     }
+
+
+    public static void mouseClick(MouseEvent e) {
+
+
+        if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
+            if (mouseDirection == Direction.UP){ mouseDirection = Direction.LEFT;	}
+            else if (mouseDirection == Direction.LEFT){ mouseDirection = Direction.DOWN;	}
+            else if (mouseDirection == Direction.DOWN){ mouseDirection = Direction.RIGHT;	}
+            else if (mouseDirection == Direction.RIGHT){ mouseDirection = Direction.UP;	}
+        }
+
+        else if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK)
+        {
+            if (mouseDirection == Direction.UP){ mouseDirection = Direction.RIGHT;	}
+            else if (mouseDirection == Direction.RIGHT){ mouseDirection = Direction.DOWN;	}
+            else if (mouseDirection == Direction.DOWN){ mouseDirection = Direction.LEFT;	}
+            else if (mouseDirection == Direction.LEFT){ mouseDirection = Direction.UP;	}
+        }
+
+
+
+    }
+
+
 
     public void move(int width, int height) {
         if (!isAlive()) return;
 
         path.add((Point) position.clone());
 
-        currentDirection.move(position, width, height);
+       if(mouseFlag==true){
+
+           mouseDirection.move(position, width, height);
+          return;
+       }
+
+       else{
+           currentDirection.move(position, width, height);
+       }
+
     }
+
 
     public Point getPosition() {
         return position;
@@ -63,10 +110,11 @@ public class Player {
         alive = false;
     }
 
-    public enum Direction {
+
+    enum Direction {
         LEFT {
             @Override
-            public void move(Point point, int width, int height) {
+            void move(Point point, int width, int height) {
                 if (point.x > 0){
                     point.x -= MOVE_AMOUNT;
                 } else {
@@ -75,23 +123,13 @@ public class Player {
             }
 
             @Override
-            public Direction getOpposite() {
+            Direction getOpposite() {
                 return Direction.RIGHT;
-            }
-
-            @Override
-            public Direction left() {
-                return DOWN;
-            }
-
-            @Override
-            public Direction right() {
-                return UP;
             }
         },
         RIGHT {
             @Override
-            public void move(Point point, int width, int height) {
+            void move(Point point, int width, int height) {
                 if (point.x < width){
                     point.x += MOVE_AMOUNT;
                 } else {
@@ -100,23 +138,13 @@ public class Player {
             }
 
             @Override
-            public Direction getOpposite() {
+            Direction getOpposite() {
                 return Direction.LEFT;
-            }
-
-            @Override
-            public Direction left() {
-                return UP;
-            }
-
-            @Override
-            public Direction right() {
-                return DOWN;
             }
         },
         UP {
             @Override
-            public void move(Point point, int width, int height) {
+            void move(Point point, int width, int height) {
                 if (point.y > 0){
                     point.y -= MOVE_AMOUNT;
                 } else {
@@ -125,23 +153,13 @@ public class Player {
             }
 
             @Override
-            public Direction getOpposite() {
+            Direction getOpposite() {
                 return Direction.DOWN;
-            }
-
-            @Override
-            public Direction left() {
-                return LEFT;
-            }
-
-            @Override
-            public Direction right() {
-                return RIGHT;
             }
         },
         DOWN {
             @Override
-            public void move(Point point, int width, int height) {
+            void move(Point point, int width, int height) {
                 if (point.y < height){
                     point.y += MOVE_AMOUNT;
                 } else {
@@ -150,30 +168,13 @@ public class Player {
             }
 
             @Override
-            public Direction getOpposite() {
+            Direction getOpposite() {
                 return Direction.UP;
-            }
-
-            @Override
-            public Direction left() {
-                return RIGHT;
-            }
-
-            @Override
-            public Direction right() {
-                return LEFT;
             }
         };
 
-        public abstract void move(Point point, int width, int height);
-        public abstract Direction getOpposite();
-        public abstract Direction left();
-        public abstract Direction right();
+        abstract void move(Point point, int width, int height);
+        abstract Direction getOpposite();
     }
-
-    public interface MoveAction {
-        Direction move(int event, Direction currentDirection);
-    }
-
 
 }
