@@ -39,24 +39,20 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 		Point position = new Point(40, 40);
 		Map<Integer, Direction> movement = new HashMap<>();
 
-
-
-
-
-
-
-		movement.put(KeyEvent.VK_UP, Direction.UP);
+/*		movement.put(KeyEvent.VK_UP, Direction.UP);
 		movement.put(KeyEvent.VK_DOWN, Direction.DOWN);
 		movement.put(KeyEvent.VK_RIGHT, Direction.RIGHT);
 		movement.put(KeyEvent.VK_LEFT, Direction.LEFT);
+*/
+
 		Player play1 = new Player(
 				position,
 				Direction.RIGHT,
 				Color.green,
 				movement
 		);
+		play1.mouseFlag=true;
 
-		
 		return play1;
 	}
 
@@ -140,6 +136,9 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 	}
 
+
+
+
 	public void mouseClicked(MouseEvent e) {
 
 	}
@@ -152,6 +151,7 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 
 	public void mousePressed(MouseEvent e) {
 
+		Player.mouseClick( e);
 	}
 
 

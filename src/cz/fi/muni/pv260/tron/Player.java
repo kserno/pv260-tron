@@ -1,7 +1,9 @@
 package cz.fi.muni.pv260.tron;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,10 @@ public class Player {
     private static final int MOVE_AMOUNT = 5;
 
     private Point position;
-    private Direction currentDirection;
+    private  Direction currentDirection;
+
+    private static Direction mouseDirection=Direction.RIGHT;
+    public boolean mouseFlag =false;
     private Color color;
 
     private Map<Integer, Direction> moveAction;
@@ -28,21 +33,62 @@ public class Player {
         this.moveAction = moveAction;
     }
 
+
+
     public void keyPressed(KeyEvent event) {
         if (moveAction.containsKey(event.getKeyCode())) {
             Direction direction = moveAction.get(event.getKeyCode());
             if (currentDirection != direction.getOpposite()) {
                 currentDirection = direction;
+
+
+
             }
         }
     }
+
+
+    public static void mouseClick(MouseEvent e) {
+
+
+        if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
+            if (mouseDirection == Direction.UP){ mouseDirection = Direction.LEFT;	}
+            else if (mouseDirection == Direction.LEFT){ mouseDirection = Direction.DOWN;	}
+            else if (mouseDirection == Direction.DOWN){ mouseDirection = Direction.RIGHT;	}
+            else if (mouseDirection == Direction.RIGHT){ mouseDirection = Direction.UP;	}
+        }
+
+        else if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK)
+        {
+            if (mouseDirection == Direction.UP){ mouseDirection = Direction.RIGHT;	}
+            else if (mouseDirection == Direction.RIGHT){ mouseDirection = Direction.DOWN;	}
+            else if (mouseDirection == Direction.DOWN){ mouseDirection = Direction.LEFT;	}
+            else if (mouseDirection == Direction.LEFT){ mouseDirection = Direction.UP;	}
+        }
+
+
+
+    }
+
+
 
     public void move(int width, int height) {
         if (!isAlive()) return;
 
         path.add((Point) position.clone());
-        currentDirection.move(position, width, height);
+
+       if(mouseFlag==true){
+
+           mouseDirection.move(position, width, height);
+          return;
+       }
+
+       else{
+           currentDirection.move(position, width, height);
+       }
+
     }
+
 
     public Point getPosition() {
         return position;
