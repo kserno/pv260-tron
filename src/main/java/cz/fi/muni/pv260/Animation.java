@@ -61,9 +61,11 @@ public class Animation {
 		Image pic;
 		long endTime;
 		
-		public oneScene(Image pic,long endTime){
-			this.pic = pic;
-			this.endTime = endTime;	
-		}
+// --Commented out by Inspection START (31-03-2020 15:17):
+//		public oneScene(Image pic,long endTime){
+//			this.pic = pic;
+//			this.endTime = endTime;
+//		}
+// --Commented out by Inspection STOP (31-03-2020 15:17)
 	}
 }
