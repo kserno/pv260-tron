@@ -9,12 +9,14 @@ public class Animation {
 	private long movieTime;
 	private long totalTime;
 	
-	public Animation(){
-		scenes = new ArrayList();
-		totalTime = 0;
-		start();
-	}
-	
+// --Commented out by Inspection START (31-03-2020 15:16):
+//	public dAnimation(){
+//		scenes = new ArrayList();
+//		totalTime = 0;
+//		start();
+//	}
+// --Commented out by Inspection STOP (31-03-2020 15:16)
+
 // --Commented out by Inspection START (31-03-2020 15:12):
 //	public synchronized void addScene(Image i, long t){
 //		totalTime += t;
@@ -40,15 +42,17 @@ public class Animation {
 		}
 	}
 	
-	public synchronized Image getImage(){
-		if(scenes.size()==0)
-		{
-			return null;
-		}else{
-			return getScene(sceneIndex).pic;
-		}
-	}
-	
+// --Commented out by Inspection START (31-03-2020 15:16):
+//	public synchronized Image getImage(){
+//		if(scenes.size()==0)
+//		{
+//			return null;
+//		}else{
+//			return getScene(sceneIndex).pic;
+//		}
+//	}
+// --Commented out by Inspection STOP (31-03-2020 15:16)
+
 	private oneScene getScene(int x){
 		return (oneScene)scenes.get(x);
 	}

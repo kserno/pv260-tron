@@ -13,6 +13,7 @@ public class Animation {
 		scenes = new ArrayList();
 		totalTime = 0;
 		start();
+
 	}
 	
 	public synchronized void addScene(Image i, long t){
