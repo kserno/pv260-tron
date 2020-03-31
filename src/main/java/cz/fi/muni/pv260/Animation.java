@@ -15,11 +15,13 @@ public class Animation {
 		start();
 	}
 	
-	public synchronized void addScene(Image i, long t){
-		totalTime += t;
-		scenes.add(new oneScene(i,totalTime));
-	}
-	
+// --Commented out by Inspection START (31-03-2020 15:12):
+//	public synchronized void addScene(Image i, long t){
+//		totalTime += t;
+//		scenes.add(new oneScene(i,totalTime));
+//	}
+// --Commented out by Inspection STOP (31-03-2020 15:12)
+
 	public synchronized void start(){
 		movieTime = 0;
 		sceneIndex = 0;
