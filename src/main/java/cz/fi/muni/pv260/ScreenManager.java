@@ -60,17 +60,17 @@ public class ScreenManager {
 	}
 
 	public void setFullScreen(DisplayMode dm){
-		JFrame f = new JFrame();
-		f.setUndecorated(true);
-		f.setIgnoreRepaint(true);
-		f.setResizable(false);
-		vc.setFullScreenWindow(f);
+		JFrame displayJFrame = new JFrame();
+		displayJFrame.setUndecorated(true);
+		displayJFrame.setIgnoreRepaint(true);
+		displayJFrame.setResizable(false);
+		vc.setFullScreenWindow(displayJFrame);
 		
 		if(dm != null && vc.isDisplayChangeSupported()){
 			try{
 				vc.setDisplayMode(dm);
 			}catch(Exception ex){}
-			f.createBufferStrategy(2);
+			displayJFrame.createBufferStrategy(2);
 		}
 	}
 	
