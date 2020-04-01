@@ -136,12 +136,7 @@ public class TronModel {
         Player.MoveAction moveAction = new Player.MoveAction() {
             @Override
             public Player.Direction move(int event, Player.Direction currentDirection) {
-                if (event == InputEvent.BUTTON1_DOWN_MASK) {
-                    return currentDirection.left();
-                } else if (event == InputEvent.BUTTON3_DOWN_MASK) {
-                    return currentDirection.right();
-                }
-                return currentDirection;
+                return getDirectionOnClick(event, currentDirection);
             }
         };
 
@@ -151,6 +146,15 @@ public class TronModel {
                 Color.blue,
                 moveAction
         );
+    }
+
+    private Player.Direction getDirectionOnClick(int event, Player.Direction currentDirection) {
+        if (event == InputEvent.BUTTON1_DOWN_MASK) {
+            return currentDirection.left();
+        } else if (event == InputEvent.BUTTON3_DOWN_MASK) {
+            return currentDirection.right();
+        }
+        return currentDirection;
     }
 
 
