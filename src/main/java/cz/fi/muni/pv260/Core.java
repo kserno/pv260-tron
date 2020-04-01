@@ -64,7 +64,11 @@ public abstract class Core implements KeyListener, MouseListener,
 	public void gameLoop(){
 		long startTime = System.currentTimeMillis();
 		long cumTime = startTime;
-		
+
+		updateGame(cumTime);
+	}
+
+	private void updateGame(long cumTime) {
 		while (running){
 			long timePassed = System.currentTimeMillis()-cumTime;
 			cumTime+= timePassed;
@@ -73,12 +77,16 @@ public abstract class Core implements KeyListener, MouseListener,
 			draw(g);
 			g.dispose();
 			sm.update();
-			
-			try{
-				Thread.sleep(20);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+
+			delayTime();
+		}
+	}
+
+	private void delayTime() {
+		try{
+			Thread.sleep(20);
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
 
