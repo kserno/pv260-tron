@@ -70,16 +70,24 @@ public abstract class Core implements KeyListener, MouseListener,
 
 	private void updateGame(long cumTime) {
 		while (running){
-			long timePassed = System.currentTimeMillis()-cumTime;
-			cumTime+= timePassed;
-			update(timePassed);
-			Graphics2D g = sm.getGraphics();
-			draw(g);
-			g.dispose();
-			sm.update();
-
+			cumTime = updatePassedTime(cumTime);
+			updateDrawOnScreen();
 			delayTime();
 		}
+	}
+
+	private void updateDrawOnScreen() {
+		Graphics2D g = sm.getGraphics();
+		draw(g);
+		g.dispose();
+		sm.update();
+	}
+
+	private long updatePassedTime(long cumTime) {
+		long timePassed = System.currentTimeMillis()-cumTime;
+		cumTime+= timePassed;
+		update(timePassed);
+		return cumTime;
 	}
 
 	private void delayTime() {
