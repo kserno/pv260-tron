@@ -3,7 +3,7 @@ package cz.fi.muni.pv260;
 
 import cz.fi.muni.pv260.tron.TronGame;
 
-public class yourclass {
+public class Main {
 
 	private static Engine engine = new TronGame();
 
