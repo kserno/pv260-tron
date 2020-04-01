@@ -99,7 +99,7 @@ public class TronModel {
 
     private Player initPlayer2() {
         Point position = new Point(600, 440);
-        Map<Integer, Player.Direction> movement = new HashMap<>();
+     //   Map<Integer, Player.Direction> movement = new HashMap<>();
 
         Player.MoveAction moveAction = (event, currentDirection) -> {
             Player.Direction newDirection = currentDirection;
