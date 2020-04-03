@@ -1,13 +1,8 @@
 package cz.fi.muni.pv260.tron;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 public class Player {
 

@@ -9,9 +9,8 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class TronModel {
 
@@ -99,7 +98,7 @@ public class TronModel {
 
     private Player initPlayer2() {
         Point position = new Point(600, 440);
-        Map<Integer, Player.Direction> movement = new HashMap<>();
+     //   Map<Integer, Player.Direction> movement = new HashMap<>();
 
         Player.MoveAction moveAction = (event, currentDirection) -> {
             Player.Direction newDirection = currentDirection;
@@ -137,12 +136,7 @@ public class TronModel {
         Player.MoveAction moveAction = new Player.MoveAction() {
             @Override
             public Player.Direction move(int event, Player.Direction currentDirection) {
-                if (event == InputEvent.BUTTON1_DOWN_MASK) {
-                    return currentDirection.left();
-                } else if (event == InputEvent.BUTTON3_DOWN_MASK) {
-                    return currentDirection.right();
-                }
-                return currentDirection;
+                return getDirectionOnClick(event, currentDirection);
             }
         };
 
@@ -152,6 +146,15 @@ public class TronModel {
                 Color.blue,
                 moveAction
         );
+    }
+
+    private Player.Direction getDirectionOnClick(int event, Player.Direction currentDirection) {
+        if (event == InputEvent.BUTTON1_DOWN_MASK) {
+            return currentDirection.left();
+        } else if (event == InputEvent.BUTTON3_DOWN_MASK) {
+            return currentDirection.right();
+        }
+        return currentDirection;
     }
 
 

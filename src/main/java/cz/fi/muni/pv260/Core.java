@@ -9,9 +9,8 @@ public abstract class Core implements KeyListener, MouseListener,
 
 	private static final DisplayMode modes[] = 
 		{
-		//new DisplayMode(1920,1080,32,0),
+
 		new DisplayMode(1680,1050,32,0),
-		//new DisplayMode(1280,1024,32,0),
 		new DisplayMode(800,600,32,0),
 		new DisplayMode(800,600,24,0),
 		new DisplayMode(800,600,16,0),
@@ -36,40 +35,66 @@ public abstract class Core implements KeyListener, MouseListener,
 	}
 	
 	public void init(){
-		sm = new ScreenManager();
-		DisplayMode dm = sm.findFirstCompatibaleMode(modes);
-		sm.setFullScreen(dm);
-		Window w = sm.getFullScreenWindow();
+		Window w = getWindowScreen();
+		setWindowScreen(w);
+		addListeners(w);
+		running = true;
+	}
+
+	private void addListeners(Window w) {
+		w.addKeyListener(this);
+		w.addMouseListener(this);
+		w.addMouseMotionListener(this);
+	}
+
+	private void setWindowScreen(Window w) {
 		w.setFont(new Font("Arial",Font.PLAIN,20));
 		w.setBackground(Color.WHITE);
 		w.setForeground(Color.RED);
 		w.setCursor(w.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),"null"));
-
-		w.addKeyListener(this);
-		w.addMouseListener(this);
-		w.addMouseMotionListener(this);
-
-		running = true;
 	}
-	
+
+	private Window getWindowScreen() {
+		sm = new ScreenManager();
+		DisplayMode dm = sm.findFirstCompatibaleMode(modes);
+		sm.setFullScreen(dm);
+		return sm.getFullScreenWindow();
+	}
+
 	public void gameLoop(){
 		long startTime = System.currentTimeMillis();
 		long cumTime = startTime;
-		
+
+		updateGame(cumTime);
+	}
+
+	private void updateGame(long cumTime) {
 		while (running){
-			long timePassed = System.currentTimeMillis()-cumTime;
-			cumTime+= timePassed;
-			update(timePassed);
-			Graphics2D g = sm.getGraphics();
-			draw(g);
-			g.dispose();
-			sm.update();
-			
-			try{
-				Thread.sleep(20);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+			cumTime = updatePassedTime(cumTime);
+			updateDrawOnScreen();
+			delayTime();
+		}
+	}
+
+	private void updateDrawOnScreen() {
+		Graphics2D g = sm.getGraphics();
+		draw(g);
+		g.dispose();
+		sm.update();
+	}
+
+	private long updatePassedTime(long cumTime) {
+		long timePassed = System.currentTimeMillis()-cumTime;
+		cumTime+= timePassed;
+		update(timePassed);
+		return cumTime;
+	}
+
+	private void delayTime() {
+		try{
+			Thread.sleep(20);
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
 
